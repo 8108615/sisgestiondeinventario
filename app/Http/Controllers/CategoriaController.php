@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categoria;
+use App\Models\Producto;
+use App\Models\Proveedor;
+use App\Models\Sucursal;
 use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
@@ -22,6 +25,7 @@ class CategoriaController extends Controller
      */
     public function create()
     {
+        
         return view('admin.categorias.create');
     }
 

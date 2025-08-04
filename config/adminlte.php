@@ -340,6 +340,13 @@ return [
             'classes' => 'bg-blue text-white',
             'active'=> ['admin/proveedor*'],
         ],
+        [
+            'text' => 'Compras',
+            'url' => 'admin/compras',
+            'icon' => 'fas fa-fw fa-shopping-cart',
+            'classes' => 'bg-blue text-white',
+            'active'=> ['admin/compra*'],
+        ],
     ],
 
     /*
