@@ -11,6 +11,7 @@
     <hr>
 @stop
 
+
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -77,6 +78,8 @@
                 <!-- /.card-header -->
                 <div class="card-body" style="display: block;">
 
+                    <livewire:counter> </livewire:counter>
+
                         
                 </div>
                 <!-- /.card-body -->
@@ -87,9 +90,9 @@
 @stop
 
 @section('css')
-
+    @livewireStyles()
 @stop
 
 @section('js')
-
+    @livewireScripts()
 @stop
