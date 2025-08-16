@@ -66,7 +66,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="nombre">nombre <b style="color: red">(*)</b></label>
+                                            <label for="nombre">Nombre <b style="color: red">(*)</b></label>
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-box"></i></span>

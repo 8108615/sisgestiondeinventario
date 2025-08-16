@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Compras;
 
 use App\Models\Compra;
+use App\Models\DetalleCompra;
 use App\Models\Lote;
 use App\Models\Producto;
 use Exception;
@@ -20,7 +21,6 @@ class ItemsCompra extends Component
     public $precioUnitario;
     public $precioCompra;
     public $precioVenta;
-
     public $fechaVencimiento;
 
     public $codigoLote;
@@ -41,11 +41,20 @@ class ItemsCompra extends Component
         $this->totalCompra = $this->compra->detalles->sum('subtotal');
 
         //Reiniciar los campos del formulario
-        $this->reset(['productoID','cantidad','precioUnitario','precioCompra','precioVenta','fechaVencimiento','codigoLote']);
+        $this->reset(['productoId','cantidad','precioUnitario','precioCompra','precioVenta','fechaVencimiento','codigoLote']);
         $this->cantidad = 1;
     }
 
+    protected $rules = [
+        'productoId' => 'required',
+        'cantidad' => 'required',
+        'precioUnitario'=> 'required',
+        'codigoLote'=> 'required',
+        'fechaVencimiento'=> 'required',
+    ];
+
     public function agregarItems(){
+        //dd('entrando a la funcion');
         $this->validate();
 
         DB::beginTransaction();
@@ -84,13 +93,55 @@ class ItemsCompra extends Component
 
             $this->cargarDatos();
 
-        }catch(Exception $e){
+            $this->dispatch(
+             'mostrar-alerta',
+                icono: 'success',
+                mensaje: 'Producto Agregado Exitosamente',
+                );
+
+        }catch(\Exception $e){
             DB::rollBack();
+            dd('Error al añadir el Producto,' .$e->getMessage());
         }
     }
-
     public function render()
     {
         return view('livewire.admin.compras.items-compra');
+    }
+
+    public function prueba(){
+        $this->dispatch(
+            'mostrar-alerta',
+            icono: 'success',
+            mensaje: 'Desde el Componente',
+        );
+        $this->cantidad = $this->cantidad;
+    }
+
+    public function borrarItem($detalleId){
+        DB::beginTransaction();
+
+        try {
+            $detalle = DetalleCompra::find($detalleId);
+            $detalle->delete();
+
+            //recalcular el total de la compra y lo guardamos
+            $this->compra->total = $this->compra->detalles->sum('subtotal');
+            $this->compra->save();
+
+            DB::commit();
+
+            $this->cargarDatos();
+
+            $this->dispatch(
+             'mostrar-alerta',
+                icono: 'success',
+                mensaje: 'Producto Borrado Exitosamente',
+                );
+
+        }catch(\Exception $e){
+            DB::rollBack();
+            dd('Error al Borrar el Producto,' . $e->getMessage());
+        }
     }
 }

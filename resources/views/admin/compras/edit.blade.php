@@ -52,12 +52,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label for="fecha">Total de la Compra </label>
-                                    <p>{{ $compra->total }}</p>
-                                </div>
-                            </div>
+                            
                         </div>
                         
                 </div>
@@ -77,22 +72,33 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body" style="display: block;">
-
-                    <livewire:counter> </livewire:counter>
-
-                        
+                <!--    <livewire:counter /> -->
+                    
+                    <livewire:admin.compras.items-compra :compra="$compra" /> 
                 </div>
                 <!-- /.card-body -->
             </div>
             <!-- /.card -->
         </div>
     </div>
+
+    
+
+    
 @stop
 
 @section('css')
-    @livewireStyles()
+    <style>
+        .select2-container .select2-selection--single{
+            height: 40px;
+        }
+    </style>
+    @livewireStyles
 @stop
 
 @section('js')
-    @livewireScripts()
+    <script>
+        $('.select2').select2({});
+    </script>
+    @livewireScripts
 @stop
