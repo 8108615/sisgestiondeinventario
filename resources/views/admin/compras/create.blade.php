@@ -5,7 +5,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('/admin') }}">Inicio</a></li>
             <li class="breadcrumb-item"><a href="{{ url('/admin/compras') }}">Compras</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Creacion de Compras</li>
+            <li class="breadcrumb-item active" aria-current="page">Creacion de una Compras</li>
         </ol>
     </nav>
     <hr>

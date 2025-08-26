@@ -347,6 +347,23 @@ return [
             'classes' => 'bg-blue text-white',
             'active'=> ['admin/compra*'],
         ],
+        [
+            'text' => 'Inventario',
+            'icon' => 'fas fa-fw fa-boxes',
+            'classes' => 'bg-blue text-white',
+            'active'=> ['admin/inventario*'],
+            'submenu'=> [
+                [
+                    'text' => 'Lotes',
+                    'url' => 'admin/lotes',
+                ],
+                [
+                    'text' => 'Sucursales por Lotes',
+                    'url' => 'admin/sucursales_por_lotes',
+                ],
+            ],
+        ],
+        
     ],
 
     /*

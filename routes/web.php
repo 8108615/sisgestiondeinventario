@@ -51,5 +51,17 @@ Route::get('/admin/compras', [App\Http\Controllers\CompraController::class, 'ind
 Route::get('/admin/compras/create', [App\Http\Controllers\CompraController::class, 'create'])->name('compras.create')->middleware('auth');
 Route::post('/admin/compras/create', [App\Http\Controllers\CompraController::class, 'store'])->name('compras.store')->middleware('auth');
 Route::get('/admin/compra/{id}/edit', [App\Http\Controllers\CompraController::class,'edit'])->name('compras.edit')->middleware('auth');
-Route::put('/admin/compras/{id}', [App\Http\Controllers\CompraController::class,'update'])->name('compras.update')->middleware('auth');
-Route::delete('/admin/compras/{id}', [App\Http\Controllers\CompraController::class,'destroy'])->name('compras.destroy')->middleware('auth');
+Route::get('/admin/compra/{compra}/enviar-correo', [App\Http\Controllers\CompraController::class,'enviarCorreo'])->name('compras.enviarCorreo')->middleware('auth');
+Route::post('/admin/compra/{compra}/finalizar-compra', [App\Http\Controllers\CompraController::class,'finalizarCompra'])->name('compras.finalizarCompra')->middleware('auth');
+
+//rutas para lotes
+Route::get('/admin/lotes', [App\Http\Controllers\LoteController::class, 'index'])->name('lotes.index')->middleware('auth');
+Route::get('/admin/lotes/create', [App\Http\Controllers\LoteController::class, 'create'])->name('lotes.create')->middleware('auth');
+Route::post('/admin/lotes/create', [App\Http\Controllers\LoteController::class, 'store'])->name('lotes.store')->middleware('auth');
+Route::get('/admin/lote/{id}', [App\Http\Controllers\LoteController::class,'show'])->name('lotes.show')->middleware('auth');
+Route::get('/admin/lote/{id}/edit', [App\Http\Controllers\LoteController::class,'edit'])->name('lotes.edit')->middleware('auth');
+Route::put('/admin/lote/{id}', [App\Http\Controllers\LoteController::class,'update'])->name('lotes.update')->middleware('auth');
+Route::delete('/admin/lote/{id}', [App\Http\Controllers\LoteController::class,'destroy'])->name('lotes.destroy')->middleware('auth');
+
+//rutas para inventario por lotes
+Route::get('/admin/inventario_por_lotes', [App\Http\Controllers\InventarioSucursalLoteController::class, 'index'])->name('inventario_por_lotes.index')->middleware('auth');

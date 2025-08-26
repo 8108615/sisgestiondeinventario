@@ -48,10 +48,21 @@ class ItemsCompra extends Component
     protected $rules = [
         'productoId' => 'required',
         'cantidad' => 'required',
-        'precioUnitario'=> 'required',
+        'precioCompra'=> 'required',
+        'precioVenta'=> 'required',
         'codigoLote'=> 'required',
         'fechaVencimiento'=> 'required',
     ];
+
+    public function updatedproductoId($value){
+        $producto  = Producto::find($value);
+        if($producto){
+            $this->precioCompra = $producto->precio_compra;
+            $this->precioVenta = $producto->precio_venta;
+        }else{
+            $this->reset(['precioCompra','precioVenta']);
+        }
+    }
 
     public function agregarItems(){
         //dd('entrando a la funcion');
@@ -81,9 +92,9 @@ class ItemsCompra extends Component
             $this->compra->detalles()->create([
                 'producto_id' => $producto->id,
                 'lote_id' => $loteId,
-                'cantidad' =>$this->cantidad,
-                'precio_unitario' => $this->precioUnitario,
-                'subtotal' => $this->cantidad * $this->precioUnitario,
+                'cantidad' => $this->cantidad,
+                'precio_unitario' => $this->precioCompra,
+                'subtotal' => $this->cantidad * $this->precioCompra,
             ]);
             //recalcular el total de la compra y lo guardamos
             $this->compra->total = $this->compra->detalles->sum('subtotal');
@@ -97,11 +108,11 @@ class ItemsCompra extends Component
              'mostrar-alerta',
                 icono: 'success',
                 mensaje: 'Producto Agregado Exitosamente',
-                );
+            );
 
         }catch(\Exception $e){
             DB::rollBack();
-            dd('Error al añadir el Producto,' .$e->getMessage());
+            dd('Error al añadir el Producto, '.$e->getMessage());
         }
     }
     public function render()
@@ -122,8 +133,16 @@ class ItemsCompra extends Component
         DB::beginTransaction();
 
         try {
+            //Busca Item del Producto
             $detalle = DetalleCompra::find($detalleId);
+
+            //Borrar el Lote del detalle de Producto
+            $lote_id = $detalle->lote_id;
+            $lote = Lote::find($lote_id);
+            $lote->delete();
+            
             $detalle->delete();
+            
 
             //recalcular el total de la compra y lo guardamos
             $this->compra->total = $this->compra->detalles->sum('subtotal');
@@ -137,11 +156,11 @@ class ItemsCompra extends Component
              'mostrar-alerta',
                 icono: 'success',
                 mensaje: 'Producto Borrado Exitosamente',
-                );
+            );
 
         }catch(\Exception $e){
             DB::rollBack();
-            dd('Error al Borrar el Producto,' . $e->getMessage());
+            dd('Error al Borrar el Producto, ' .$e->getMessage());
         }
     }
 }
