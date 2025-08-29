@@ -89,3 +89,5 @@ Table Detalle_Compras {
     precio_unitario decimal(10,2) [not null]
     subtotal decimal(10, 2) [not null] //cantidad * precio unitario
 }
+
+//correo mailtrap

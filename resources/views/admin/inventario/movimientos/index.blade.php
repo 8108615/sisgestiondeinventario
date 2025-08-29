@@ -4,61 +4,18 @@
     <nav aria-label="breadcrumb" style="font-size: 18pt">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('/admin') }}">Inicio</a></li>
-            <li class="breadcrumb-item"><a href="{{ url('/admin/lotes') }}">Lotes</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Listado de Lotes</li>
+            <li class="breadcrumb-item"><a href="{{ url('/admin/inventario') }}">Historial de Inventario</a></li>
         </ol>
     </nav>
     <hr>
 @stop
 
 @section('content')
-
-<div class="row">
-        <div class="col-md-12">
-            <div class="card card-outline card-primary">
-                <div class="card-header">
-                    <h3 class="card-title"><b>Filtrado de Datos</b></h3>
-                    <!-- /.card-tools -->
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body table-responsive" style="display: block;">
-                    <form action="{{ url('/admin/lotes') }}" method="GET">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="">Desde: </label>
-                                    <input type="date" class="form-control" name="fecha_desde">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="">Hasta: </label>
-                                    <input type="date" class="form-control" name="fecha_hasta">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary" style="margin-top: 32px;">
-                                        <i class="fas fa-search"></i> Filtrar
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-        </div>
-    </div>
-
-
     <div class="row">
         <div class="col-md-12">
             <div class="card card-outline card-primary">
                 <div class="card-header">
-                    <h3 class="card-title"><b>Lotes Registrados</b></h3>
-                    <!-- /.card-tools -->
+                    <h3 class="card-title"><b>Inventario Registrados</b></h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive" style="display: block;">
@@ -66,36 +23,26 @@
                         <thead>
                             <tr>
                                 <th>Nro</th>
-                                <th>Codigo de Lote</th>
+                                <th>Tipo de Movimiento</th>
+                                <th>Lote</th>
                                 <th>Producto</th>
-                                <th>Proveedor</th>
-                                <th>Fecha de Entrada</th>
-                                <th>Fecha de Vencimiento</th>
-                                <th>Días Restantes</th>
-                                <th>Cantidad Actual</th>
-                                <th>Estado</th>
+                                <th>Cantidad</th>
+                                <th>Sucursal</th>
+                                <th>Fecha</th>
+                                <th>Observacion</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($lotes as $lote)
-                                <tr class="{{ $lote->is_expired ? 'table-danger' : '' }}">
+                            @foreach ($movimientos as $movimiento)
+                                <tr>
                                     <td style="text-align: center">{{ $loop->iteration }}</td>
-                                    <td>{{ $lote->codigo_lote }}</td>
-                                    <td>{{ $lote->producto->nombre }}</td>
-                                    <td>{{ $lote->proveedor->nombre }}</td>
-                                    <td>{{ $lote->fecha_entrada }}</td>
-                                    <td>{{ $lote->fecha_vencimiento }}</td>
-                                    <td>{{ $lote->days_to_expire }} Dias</td>
-                                    <td>{{ $lote->cantidad_actual }}</td>
-                                    <td>
-                                        @if ($lote->is_expired)
-                                            <span class="badge badge-danger">Vencido</span>
-                                        @elseif ($lote->days_to_expire <= 20)
-                                            <span class="badge badge-warning">Por Caducar</span>
-                                        @else
-                                            <span class="badge badge-success">Vigente</span>
-                                        @endif
-                                    </td>
+                                    <td>{{ $movimiento->tipo_movimiento }}</td>
+                                    <td>{{ $movimiento->lote->codigo_lote }}</td>
+                                    <td>{{ $movimiento->producto->nombre }}</td>
+                                    <td>{{ $movimiento->cantidad }}</td>
+                                    <td>{{ $movimiento->sucursal->nombre }}</td>
+                                    <td>{{ $movimiento->fecha }}</td>
+                                    <td>{{ $movimiento->observacion }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -173,10 +120,10 @@
                 "pageLength": 10,
                 "language": {
                     "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Lotes",
-                    "infoEmpty": "Mostrando 0 a 0 de 0 Lotes",
-                    "infoFiltered": "(Filtrado de _MAX_ total Lotes)",
-                    "lengthMenu": "Mostrar _MENU_ Lotes",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Movimientos",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 Movimientos",
+                    "infoFiltered": "(Filtrado de _MAX_ total Movimientos)",
+                    "lengthMenu": "Mostrar _MENU_ Movimientos",
                     "loadingRecords": "Cargando ...",
                     "processing": "Procesando...",
                     "search": "Buscador:",

@@ -236,11 +236,11 @@ return [
     |
     */
 
-    'right_sidebar' => false,
+    'right_sidebar' => true,
     'right_sidebar_icon' => 'fas fa-cogs',
     'right_sidebar_theme' => 'dark',
-    'right_sidebar_slide' => true,
-    'right_sidebar_push' => true,
+    'right_sidebar_slide' => false,
+    'right_sidebar_push' => false,
     'right_sidebar_scrollbar_theme' => 'os-theme-light',
     'right_sidebar_scrollbar_auto_hide' => 'l',
 
@@ -360,6 +360,10 @@ return [
                 [
                     'text' => 'Sucursales por Lotes',
                     'url' => 'admin/inventario/sucursales_por_lotes',
+                ],
+                [
+                    'text' => 'Historial de Movimientos',
+                    'url' => 'admin/inventario/movimientos',
                 ],
             ],
         ],
